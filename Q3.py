@@ -9,18 +9,18 @@ b) Podem existir dias sem faturamento, como nos finais de semana e feriados. Est
 
 import json
 
-file_path = 'C:\\Users\\LUANF\\Teste-Têcnico\\faturamento_diario.json'
+file_path = 'C:\\Users\\LUANF\\Teste-Têcnico\\dados.json'
 
 with open(file_path, 'r') as json_file:
     faturamento = json.load(json_file)
 
 def calcula_faturamento(faturamento):
-    valores = [valor for valor in faturamento.values() if valor > 0]
+    valores = [dia['valor'] for dia in faturamento if dia['valor'] > 0]
 
     menor_valor = min(valores)
     maior_valor = max(valores)
     
-    media_mensal = sum(valores) / len(valores)
+    media_mensal = (sum(valores) / len(valores))
     
     dias_acima_media = sum(1 for valor in valores if valor > media_mensal)
     
@@ -28,7 +28,7 @@ def calcula_faturamento(faturamento):
 
 menor, maior, dias_acima = calcula_faturamento(faturamento)
 print("Resultado:")
-print(f"Menor valor de faturamento: {menor}")
-print(f"Maior valor de faturamento: {maior}")
+print(f"Menor valor de faturamento: {menor:.2f}")
+print(f"Maior valor de faturamento: {maior:.2f}")
 print(f"Número de dias com faturamento acima da média: {dias_acima}")
 
